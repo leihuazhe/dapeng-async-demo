@@ -1,0 +1,4 @@
+.idea/
+**/*target
+scala-sql.properties
+soa.base_IS_UNDEFINED/
