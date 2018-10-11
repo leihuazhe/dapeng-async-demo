@@ -2,3 +2,8 @@
 **/*target
 scala-sql.properties
 soa.base_IS_UNDEFINED/
+.DS_Store
+hello-world-api/src/.DS_Store
+hello-world-api/src/main/.DS_Store
+**/logs
+**/*.iml

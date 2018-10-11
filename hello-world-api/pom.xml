@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.dapeng</groupId>
+    <artifactId>hello-world-api</artifactId>
+    <version>1.0</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <dapeng.version>2.0.5</dapeng.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.dapeng-soa</groupId>
+            <artifactId>dapeng-utils</artifactId>
+            <version>2.0.5</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.dapeng</groupId>
+                <artifactId>dapeng-maven-plugin</artifactId>
+                <version>2.0.5</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>thriftGenerator</goal>
+                        </goals>
+                        <configuration>
+                            <language>java</language>
+                            <sourceFilePath>src/main/resources/thrifts/</sourceFilePath>
+                            <targetFilePath>src/main/</targetFilePath>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
