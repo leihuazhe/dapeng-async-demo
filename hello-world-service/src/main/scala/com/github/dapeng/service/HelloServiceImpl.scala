@@ -9,7 +9,6 @@ import org.asynchttpclient.Response
 import org.slf4j.LoggerFactory
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
-//import scala.compat.java8.FutureConverters._
 
 
 /**
@@ -29,9 +28,19 @@ class HelloServiceImpl extends HelloServiceAsync {
     //    val completeFuture: CompletableFuture[HelloResponse] = new CompletableFuture[HelloResponse]()
 
     //耗时很久的方法 20s
-    val result: CompletableFuture[Response] = postPayThirdRequest(hello)
+    val result: CompletableFuture[Response] = getPayThirdRequest(hello)
 
     toScala(result)(resp => HelloResponse(s"$hello", resp.getResponseBody))
+  }
+
+
+  /**
+    * 调用第三方接口
+    */
+  def getPayThirdRequest(hello: Hello): CompletableFuture[Response] = wrapLog("请求第三方接口") {
+    //      requestForGet
+    val asyncHttpFuture: CompletableFuture[Response] = HttpAsyncClient.requestForGet1("http://127.0.0.1:8080/test", "")
+    asyncHttpFuture
   }
 
   /**
@@ -39,7 +48,7 @@ class HelloServiceImpl extends HelloServiceAsync {
     */
   def postPayThirdRequest(hello: Hello): CompletableFuture[Response] = wrapLog("请求第三方接口") {
     //      requestForGet
-    val asyncHttpFuture: CompletableFuture[Response] = HttpAsyncClient.requestForGet1("http://127.0.0.1:8080/test", "")
+    val asyncHttpFuture: CompletableFuture[Response] = HttpAsyncClient.requestForGet1("http://127.0.0.1:8080/post", "{body}")
     asyncHttpFuture
   }
 
@@ -68,9 +77,8 @@ class HelloServiceImpl extends HelloServiceAsync {
     *
     **/
   override def sayHello2(hello: Hello): Future[HelloResponse] = {
-    Thread.sleep(5000)
-    Future {
-      HelloResponse(hello.message.toString, hello.name)
-    }
+    val result: CompletableFuture[Response] = postPayThirdRequest(hello)
+
+    toScala(result)(resp => HelloResponse(s"${hello.name}", resp.getResponseBody))
   }
 }
