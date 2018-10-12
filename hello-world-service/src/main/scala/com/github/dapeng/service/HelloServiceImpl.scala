@@ -2,8 +2,8 @@ package com.github.dapeng.service
 
 import java.util.concurrent.{CompletableFuture, Executors}
 
-import com.github.dapeng.hello.scala.domain.{Hello, HelloResponse}
-import com.github.dapeng.hello.scala.service.HelloServiceAsync
+import com.github.dapeng.hello.domain.{Hello, HelloResponse}
+import com.github.dapeng.hello.service.HelloService
 import com.maple.test.HttpAsyncClient
 import org.asynchttpclient.Response
 import org.slf4j.LoggerFactory
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 /**
   * @author maple 2018.09.13 上午10:02
   */
-class HelloServiceImpl extends HelloServiceAsync {
+class HelloServiceImpl extends HelloService {
   //  private val executors = Executors.newFixedThreadPool(Runtime.getRuntime.availableProcessors)
 
   private val logger = LoggerFactory.getLogger(getClass)
@@ -24,13 +24,15 @@ class HelloServiceImpl extends HelloServiceAsync {
   /**
     * 服务实现方法
     **/
-  override def sayHello(hello: Hello): Future[HelloResponse] = {
+  override def sayHello(hello: Hello): HelloResponse = {
     //    val completeFuture: CompletableFuture[HelloResponse] = new CompletableFuture[HelloResponse]()
-
     //耗时很久的方法 20s
-    val result: CompletableFuture[Response] = getPayThirdRequest(hello)
+    val result: Response = getPayThirdRequest(hello).get
 
-    toScala(result)(resp => HelloResponse(s"$hello", resp.getResponseBody))
+    val response = new HelloResponse()
+    response.setContent(result.getResponseBody)
+    response.setThirdMsg(result.getContentType)
+    response
   }
 
 
@@ -76,9 +78,14 @@ class HelloServiceImpl extends HelloServiceAsync {
   /**
     *
     **/
-  override def sayHello2(hello: Hello): Future[HelloResponse] = {
-    val result: CompletableFuture[Response] = postPayThirdRequest(hello)
+  override def sayHello2(hello: Hello): HelloResponse = {
+    //    val completeFuture: CompletableFuture[HelloResponse] = new CompletableFuture[HelloResponse]()
+    //耗时很久的方法 20s
+    val result: Response = getPayThirdRequest(hello).get
 
-    toScala(result)(resp => HelloResponse(s"${hello.name}", resp.getResponseBody))
+    val response = new HelloResponse()
+    response.setContent(result.getResponseBody)
+    response.setThirdMsg(result.getContentType)
+    response
   }
 }
