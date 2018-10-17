@@ -15,7 +15,7 @@ lazy val api = (project in file("hello-world-api"))
     commonSettings,
     name := "hello-world-api",
     libraryDependencies ++= Seq(
-      "com.github.dapeng" % "dapeng-client-netty" % "2.0.5"
+      "com.github.dapeng-soa" % "dapeng-client-netty" % "2.0.5"
     )
   ).enablePlugins(ThriftGeneratorPlugin)
 
@@ -26,7 +26,7 @@ lazy val service = (project in file("hello-world-service"))
     commonSettings,
     name := "hello-world_service",
     libraryDependencies ++= Seq(
-      "com.github.dapeng" % "dapeng-spring" % "2.0.5",
+      "com.github.dapeng-soa" % "dapeng-spring" % "2.0.5",
       "com.github.wangzaixiang" %% "scala-sql" % "2.0.6",
       "org.slf4j" % "slf4j-api" % "1.7.13",
       "ch.qos.logback" % "logback-classic" % "1.1.3",
@@ -37,7 +37,7 @@ lazy val service = (project in file("hello-world-service"))
       "org.springframework" % "spring-context" % "4.3.5.RELEASE",
       "org.springframework" % "spring-tx" % "4.3.5.RELEASE",
       "org.springframework" % "spring-jdbc" % "4.3.5.RELEASE",
-      "com.github.dapeng" % "dapeng-client-netty" % "2.0.5",
+      "com.github.dapeng-soa" % "dapeng-client-netty" % "2.0.5",
       //async-http-client
       "org.asynchttpclient" % "async-http-client" % "2.5.3"
     )).enablePlugins(ImageGeneratorPlugin)

@@ -9,6 +9,10 @@ import java.util.concurrent.*;
 /**
  * @author maple 2018.09.13 下午3:48
  */
+
+/**
+ * @author <a href=mailto:leihuazhe@gmail.com>maple<a>
+ */
 public class HttpAsyncClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpAsyncClient.class);
     /**
