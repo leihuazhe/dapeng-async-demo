@@ -28,7 +28,11 @@ class HelloServiceImpl extends HelloServiceAsync {
     //    val completeFuture: CompletableFuture[HelloResponse] = new CompletableFuture[HelloResponse]()
 
     //耗时很久的方法 20s
+    logger.debug(s"请求方法 sayHello, 信息 $hello")
+
     val result: CompletableFuture[Response] = getPayThirdRequest(hello)
+
+    logger.debug(s"请求方法 sayHello, 处理完成： $result")
 
     toScala(result)(resp => HelloResponse(s"$hello", resp.getResponseBody))
   }
