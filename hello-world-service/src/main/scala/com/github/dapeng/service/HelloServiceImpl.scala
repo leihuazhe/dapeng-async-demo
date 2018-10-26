@@ -81,7 +81,18 @@ class HelloServiceImpl extends HelloServiceAsync {
     *
     **/
   override def sayHello2(hello: Hello): Future[HelloResponse] = {
+    //耗时很久的方法 20s
+
+    if (logger.isDebugEnabled()) {
+      logger.debug(s"请求方法 sayHello, 信息 $hello")
+    }
+
+
     val result: CompletableFuture[Response] = postPayThirdRequest(hello)
+
+    if (logger.isDebugEnabled()) {
+      logger.debug(s"请求方法 sayHello, 处理完成： $result")
+    }
 
     toScala(result)(resp => HelloResponse(s"${hello.name}", resp.getResponseBody))
   }
